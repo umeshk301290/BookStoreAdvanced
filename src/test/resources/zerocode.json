@@ -1,0 +1,39 @@
+{
+    "scenarioName": "Create Employee Details Happy and Sad test",
+    "steps": [
+      {
+          "name": "new_book",
+          "url": "/books",
+          "operation": "POST",
+          "request": {
+                  "body":{
+                 "isbn": "12342",
+                 "title": "Full Time",
+                 "author":"henry",
+                 "price":100.56
+},
+"headers":{
+"Content-Type":"application/json"
+}
+           },
+          "assertions": {
+              "status": 201,
+              "body": {
+                 "id": "$NOT.NULL"
+                }
+            }
+      }, {
+            "name": "get_emp_details",
+            "url": "/books/${$.new_book.request.body.isbn}",
+            "operation": "GET",
+            "request": {},
+            "assertions": {
+                "status": 200,
+                "body": {
+                   "isbn": "${$.new_book.request.body.isbn}",
+                   "author": "${$.new_book.request.body.author}"
+                }
+            }
+        }
+]
+}
